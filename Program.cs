@@ -1,4 +1,5 @@
 ﻿using System;
+using ChessGame.board;
 
 namespace ChessGame
 {
