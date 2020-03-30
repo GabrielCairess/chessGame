@@ -23,7 +23,7 @@ namespace ChessGame.board
         {
             return Line.ToString()
                 + ", "
-                + Column();
+                + Column.ToString();
         }
     }
 }
