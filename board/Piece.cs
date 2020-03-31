@@ -6,18 +6,18 @@ namespace ChessGame.board
 {
     class Piece
     {
-        public Position position { get; set; }
-        public Color color { get; protected set; }
+        public Position Position { get; set; }
+        public Color Color { get; protected set; }
 
         public int QtdMovements { get; protected set; }
-        public Board brd { get; set; }
+        public Board Brd { get; set; }
 
         public Piece(Position position, Color color, Board brd)
         {
-            this.position = position;
-            this.color = color;
+            Position = position;
+            Color = color;
             QtdMovements = 0;
-            this.brd = brd;
+            Brd = brd;
         }
     }
 }

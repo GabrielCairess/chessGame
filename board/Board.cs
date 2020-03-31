@@ -1,6 +1,6 @@
 ﻿namespace ChessGame.board
 {
-    public class Board
+    class Board
     {
         public int Lines { get; set; }
         public int Columns { get; set; }
@@ -11,6 +11,11 @@
             Lines = lines;
             Columns = columns;
             pieces = new Piece[Lines, Columns];
+        }
+
+        public Piece piece(int line, int column)
+        {
+            return pieces[line, column];
         }
     }
 }
