@@ -7,7 +7,11 @@ namespace ChessGame
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+            Board board = new Board(8, 8);
+
+            Screen.printBoard(board);
+
+            Console.WriteLine(board.Lines);
         }
     }
 }
