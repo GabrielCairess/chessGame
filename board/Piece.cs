@@ -12,12 +12,12 @@ namespace ChessGame.board
         public int QtdMovements { get; protected set; }
         public Board Brd { get; set; }
 
-        public Piece(Position position, Color color, Board brd)
+        public Piece(Board brd, Color color)
         {
-            Position = position;
+            Brd = brd;
+            Position = null;
             Color = color;
             QtdMovements = 0;
-            Brd = brd;
         }
     }
 }
