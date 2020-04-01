@@ -11,6 +11,7 @@ namespace ChessGame
         {
             for (int i = 0; i < board.Lines; i++)
             {
+                Console.Write(8 - i + " ");
                 for (int j = 0; j < board.Columns; j++)
                 {
                     if (board.piece(i, j) == null)
@@ -19,10 +20,27 @@ namespace ChessGame
                     }
                     else
                     {
-                        Console.Write(board.piece(i, j) + " ");
+                        printPiece(board.piece(i, j));
+                        Console.Write(" ");
                     }
                 }
                 Console.WriteLine();
+            }
+            Console.WriteLine(" a b c d e f g h");
+        }
+
+        public static void printPiece(Piece p)
+        {
+            if (p.Color == Color.White)
+            {
+                Console.Write(p);
+            }
+            else
+            {
+                ConsoleColor aux = Console.ForegroundColor;
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.Write(p);
+                Console.ForegroundColor = aux;
             }
         }
     }
