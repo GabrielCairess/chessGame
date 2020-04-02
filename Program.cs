@@ -1,6 +1,7 @@
 ﻿using System;
 using ChessGame.board;
 using ChessGame.Chess;
+using System.Collections.Generic;
 
 namespace ChessGame
 {
@@ -17,11 +18,7 @@ namespace ChessGame
                     try
                     {
                         Console.Clear();
-                        Screen.printBoard(match.Board);
-                        Console.WriteLine();
-
-                        Console.WriteLine("Turn: " + match.turn);
-                        Console.WriteLine("Aguardando Jogada: " + match.currentPlayer);
+                        Screen.printMatch(match);
 
                         Console.WriteLine();
                         Console.Write("Origin: ");
