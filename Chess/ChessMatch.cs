@@ -14,6 +14,7 @@ namespace ChessGame.Chess
 
         private HashSet<Piece> pieces;
         private HashSet<Piece> capturedPieces;
+        public bool check { get; set; }
 
         public ChessMatch()
         {
@@ -22,11 +23,12 @@ namespace ChessGame.Chess
             currentPlayer = Color.White;
             Finished = false;
             pieces = new HashSet<Piece>();
+            check = false;
             capturedPieces = new HashSet<Piece>();
             putPieces();
         }
 
-        public void executeMoviment(Position origin, Position destiny)
+        public Piece executeMoviment(Position origin, Position destiny)
         {
             Piece p = Board.removePiece(origin);
             p.incrementMoviments();
@@ -37,11 +39,35 @@ namespace ChessGame.Chess
             {
                 capturedPieces.Add(capturedPiece);
             }
+            return capturedPiece;
+        }
+
+        public void remakeMove(Position origin, Position destiny, Piece capturedPiece)
+        {
+            Piece p = Board.removePiece(destiny);
+            p.decrementMoviments();
+
+            if (capturedPiece != null)
+            {
+                Board.putPiece(capturedPiece, destiny);
+                capturedPieces.Remove(capturedPiece);
+            }
+            Board.putPiece(p, origin);
         }
 
         public void realizeMove(Position origin, Position destiny)
         {
-            executeMoviment(origin, destiny);
+            Piece capturedPiece = executeMoviment(origin, destiny);
+
+
+            if (isInCheck(currentPlayer))
+            {
+                remakeMove(origin, destiny, capturedPiece);
+                throw new BoardException("Can't put in check yourself!");
+            }
+
+            check = isInCheck(getOpponent(currentPlayer)) ? true : false;
+
             turn++;
             changePlayer();
         }
@@ -98,7 +124,7 @@ namespace ChessGame.Chess
         public HashSet<Piece> piecesInGame(Color color)
         {
             HashSet<Piece> aux = new HashSet<Piece>();
-            foreach (Piece x in capturedPieces)
+            foreach (Piece x in pieces)
             {
                 if (x.Color == color)
                 {
@@ -109,16 +135,52 @@ namespace ChessGame.Chess
             return aux;
         }
 
+        private Color getOpponent(Color color)
+        {
+            return color == Color.Black ? Color.White : Color.Black;
+        }
+
+        private Piece king(Color color)
+        {
+            foreach (Piece p in piecesInGame(color))
+            {
+                if (p is King)
+                {
+                    return p;
+                }
+            }
+            return null;
+        }
+
+        public bool isInCheck(Color color)
+        {
+            Piece r = king(color);
+            if (r == null)
+            {
+                throw new BoardException("No King in the board!");
+            }
+            
+            foreach (Piece p in piecesInGame(getOpponent(color)))
+            {
+                bool[,] mat = p.possibleMoviments();
+                if (mat[r.Position.Line, r.Position.Column])
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
         private void putPieces()
         {
-            putNewPiece('c', 1, new Tower(Board, Color.White));
+            putNewPiece('c', 1, new King(Board, Color.White));
             putNewPiece('c', 2, new Tower(Board, Color.White));
             putNewPiece('e', 2, new Tower(Board, Color.White));
             putNewPiece('e', 1, new Tower(Board, Color.White));
-            putNewPiece('d', 1, new Tower(Board, Color.White));
+            putNewPiece('d', 2, new Tower(Board, Color.White));
 
             putNewPiece('c', 7, new Tower(Board, Color.Black));
-            putNewPiece('c', 8, new Tower(Board, Color.Black));
+            putNewPiece('c', 8, new King(Board, Color.Black));
             putNewPiece('d', 7, new Tower(Board, Color.Black));
             putNewPiece('e', 7, new Tower(Board, Color.Black));
             putNewPiece('e', 8, new Tower(Board, Color.Black));

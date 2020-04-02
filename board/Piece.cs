@@ -25,6 +25,10 @@ namespace ChessGame.board
             QtdMovements++;
         }
 
+        public void decrementMoviments()
+        {
+            QtdMovements--;
+        }
         public bool existsPossibleMoviments()
         {
             bool[,] mat = possibleMoviments();

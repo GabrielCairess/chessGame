@@ -82,6 +82,11 @@ namespace ChessGame
             Console.WriteLine();
             Console.WriteLine("Turn: " + match.turn);
             Console.WriteLine("Aguardando Jogada: " + match.currentPlayer);
+
+            if (match.check)
+            {
+                Console.WriteLine("CHEEECK!");
+            }
         }
 
         public static void printCapturedPieces(ChessMatch match)
