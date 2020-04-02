@@ -19,5 +19,10 @@ namespace ChessGame.board
             Color = color;
             QtdMovements = 0;
         }
+
+        public void incrementMoviments()
+        {
+            QtdMovements++;
+        }
     }
 }

@@ -36,6 +36,19 @@
             }
         }
 
+        public Piece removePiece(Position pos)
+        {
+            if (piece(pos) == null)
+            {
+                return null;
+            }
+
+            Piece aux = piece(pos);
+            aux.Position = null;
+            pieces[pos.Line, pos.Column] = null;
+            return aux;
+        }
+
         public bool existsPiece(Position pos)
         {
             validatePosition(pos);

@@ -10,13 +10,10 @@ namespace ChessGame
         {
             try
             {
-                Board board = new Board(8, 8);
+                ChessMatch match = new ChessMatch();
 
-                board.putPiece(new Tower(board, Color.Black), new Position(0, 0));
-                board.putPiece(new Tower(board, Color.White), new Position(0, 3));
-                board.putPiece(new Tower(board, Color.Black), new Position(7, 5));
-
-                Screen.printBoard(board);
+                Screen.printBoard(match.board);
+            
                 
             }
             catch (BoardException e)
