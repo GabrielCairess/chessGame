@@ -25,6 +25,27 @@ namespace ChessGame.board
             QtdMovements++;
         }
 
+        public bool existsPossibleMoviments()
+        {
+            bool[,] mat = possibleMoviments();
+            for (int i = 0; i < Board.Lines; i++)
+            {
+                for (int j = 0; j < Board.Columns; j++)
+                {
+                    if (mat[i, j])
+                    {
+                        return true;
+                    }
+                }
+            }
+            return false;
+        }
+
+        public bool canPieceMove(Position destiny)
+        {
+            return possibleMoviments()[destiny.Line, destiny.Column];
+        }
+
         public abstract bool[,] possibleMoviments();
     }
 }
