@@ -19,6 +19,12 @@ namespace ChessGame.board
             Column = column;
         }
 
+        public void defineValues(int line, int column)
+        {
+            Line = line;
+            Column = column;
+        }
+
         public override string ToString()
         {
             return Line.ToString()

@@ -15,10 +15,19 @@ namespace ChessGame
                 while (!match.Finished)
                 {
                     Console.Clear();
-                    Console.WriteLine();
                     Screen.printBoard(match.Board);
+                    Console.WriteLine();
+
+                    
                     Console.Write("Origin: ");
                     Position origin = Screen.readChessPosition();
+
+                    bool[,] possiblePositions = match.Board.getPiece(origin).possibleMoviments();
+
+                    Console.Clear();
+                    Screen.printBoard(match.Board, possiblePositions);
+
+                    
                     Console.Write("Destiny: ");
                     Position destiny = Screen.readChessPosition();
 

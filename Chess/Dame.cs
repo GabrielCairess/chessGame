@@ -11,6 +11,11 @@ namespace ChessGame.Chess
         {
         }
 
+        public override bool[,] possibleMoviments()
+        {
+            throw new NotImplementedException();
+        }
+
         public override string ToString()
         {
             return "D";

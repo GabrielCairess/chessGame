@@ -15,15 +15,7 @@ namespace ChessGame
                 Console.Write(8 - i + " ");
                 for (int j = 0; j < board.Columns; j++)
                 {
-                    if (board.piece(i, j) == null)
-                    {
-                        Console.Write("- ");
-                    }
-                    else
-                    {
-                        printPiece(board.piece(i, j));
-                        Console.Write(" ");
-                    }
+                    printPiece(board.getPiece(i, j));
                 }
                 Console.WriteLine();
             }
@@ -32,17 +24,45 @@ namespace ChessGame
 
         public static void printPiece(Piece p)
         {
-            if (p.Color == Color.White)
+            if (p == null)
             {
-                Console.Write(p);
+                Console.Write("- ");
             }
             else
             {
-                ConsoleColor aux = Console.ForegroundColor;
-                Console.ForegroundColor = ConsoleColor.Red;
-                Console.Write(p);
-                Console.ForegroundColor = aux;
+                if (p.Color == Color.White)
+                {
+                    Console.Write(p);
+                }
+                else
+                {
+                    ConsoleColor aux = Console.ForegroundColor;
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.Write(p);
+                    Console.ForegroundColor = aux;
+                }
+                Console.Write(" ");
             }
+        }
+
+        internal static void printBoard(Board board, bool[,] possiblePositions)
+        {
+            ConsoleColor originalBackground = Console.BackgroundColor;
+            ConsoleColor alteredBackground = ConsoleColor.DarkGray;
+
+            for (int i = 0; i < board.Lines; i++)
+            {
+                Console.Write(8 - i + " ");
+                for (int j = 0; j < board.Columns; j++)
+                {
+                    Console.BackgroundColor = possiblePositions[i, j] ? alteredBackground : originalBackground;
+                    printPiece(board.getPiece(i, j));
+                    Console.BackgroundColor = originalBackground;
+                }
+                Console.WriteLine();
+            }
+            Console.WriteLine("  a b c d e f g h");
+            Console.BackgroundColor = originalBackground;
         }
 
         public static Position readChessPosition()
