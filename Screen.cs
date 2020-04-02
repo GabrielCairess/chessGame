@@ -81,11 +81,20 @@ namespace ChessGame
             Console.WriteLine();
             Console.WriteLine();
             Console.WriteLine("Turn: " + match.turn);
-            Console.WriteLine("Aguardando Jogada: " + match.currentPlayer);
 
-            if (match.check)
+            if (!match.Finished)
             {
-                Console.WriteLine("CHEEECK!");
+                Console.WriteLine("Aguardando Jogada: " + match.currentPlayer);
+
+                if (match.check)
+                {
+                    Console.WriteLine("CHEEECK!");
+                }
+            }
+            else
+            {
+                Console.WriteLine("CHEEECK MAAATE!!");
+                Console.WriteLine("Winner: " + match.currentPlayer + "!!");
             }
         }
 
