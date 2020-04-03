@@ -45,7 +45,7 @@ namespace ChessGame.board
             return false;
         }
 
-        public bool canPieceMove(Position destiny)
+        public bool possibleMoviment(Position destiny)
         {
             return possibleMoviments()[destiny.Line, destiny.Column];
         }

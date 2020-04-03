@@ -14,7 +14,7 @@ namespace ChessGame.Chess
 
         private HashSet<Piece> pieces;
         private HashSet<Piece> capturedPieces;
-        public bool check { get; set; }
+        public bool check { get; private set; }
 
         public ChessMatch()
         {
@@ -22,8 +22,8 @@ namespace ChessGame.Chess
             turn = 1;
             currentPlayer = Color.White;
             Finished = false;
-            pieces = new HashSet<Piece>();
             check = false;
+            pieces = new HashSet<Piece>();
             capturedPieces = new HashSet<Piece>();
             putPieces();
         }
@@ -97,7 +97,7 @@ namespace ChessGame.Chess
 
         public void validatePositionDestiny(Position origin, Position destiny)
         {
-            if (!Board.getPiece(origin).canPieceMove(destiny))
+            if (!Board.getPiece(origin).possibleMoviment(destiny))
             {
                 throw new BoardException("Can't realize this moviment with this piece!");
             }
@@ -162,6 +162,7 @@ namespace ChessGame.Chess
         public bool isInCheck(Color color)
         {
             Piece r = king(color);
+            bool[,] possibleMovimentsOpponent = r.possibleMoviments();
             if (r == null)
             {
                 throw new BoardException("No King in the board!");
@@ -170,6 +171,7 @@ namespace ChessGame.Chess
             foreach (Piece p in piecesInGame(getOpponent(color)))
             {
                 bool[,] mat = p.possibleMoviments();
+
                 if (mat[r.Position.Line, r.Position.Column])
                 {
                     return true;
