@@ -39,6 +39,31 @@ namespace ChessGame.Chess
             {
                 capturedPieces.Add(capturedPiece);
             }
+
+            // special move (small rock)
+
+            if (p is King &&  destiny.Column == origin.Column + 2)
+            {
+                Position originT = new Position(origin.Line, origin.Column + 3);
+                Position destinyT = new Position(origin.Line, origin.Column + 1);
+
+                Piece t = Board.removePiece(originT);
+                t.incrementMoviments();
+                Board.putPiece(t, destinyT);
+            }
+
+            // special move (big rock)
+
+            if (p is King && destiny.Column == origin.Column - 2)
+            {
+                Position originT = new Position(origin.Line, origin.Column - 4);
+                Position destinyT = new Position(origin.Line, origin.Column - 1);
+
+                Piece t = Board.removePiece(originT);
+                t.incrementMoviments();
+                Board.putPiece(t, destinyT);
+            }
+
             return capturedPiece;
         }
 
@@ -52,7 +77,32 @@ namespace ChessGame.Chess
                 Board.putPiece(capturedPiece, destiny);
                 capturedPieces.Remove(capturedPiece);
             }
+
             Board.putPiece(p, origin);
+
+            // special move (small rock)
+
+            if (p is King && destiny.Column == origin.Column + 2)
+            {
+                Position originT = new Position(origin.Line, origin.Column + 3);
+                Position destinyT = new Position(origin.Line, origin.Column + 2);
+
+                Piece t = Board.removePiece(destinyT);
+                t.decrementMoviments();
+                Board.putPiece(t, originT);
+            }
+
+            // special move (big rock)
+
+            if (p is King && destiny.Column == origin.Column - 2)
+            {
+                Position originT = new Position(origin.Line, origin.Column - 4);
+                Position destinyT = new Position(origin.Line, origin.Column - 1);
+
+                Piece t = Board.removePiece(destinyT);
+                t.decrementMoviments();
+                Board.putPiece(t, originT);
+            }
         }
 
         public void realizeMove(Position origin, Position destiny)
@@ -219,7 +269,7 @@ namespace ChessGame.Chess
             putNewPiece('b', 1, new Horse(Board, Color.White));
             putNewPiece('c', 1, new Bishop(Board, Color.White));
             putNewPiece('d', 1, new Dame(Board, Color.White));
-            putNewPiece('e', 1, new King(Board, Color.White));
+            putNewPiece('e', 1, new King(Board, Color.White, this));
             putNewPiece('f', 1, new Bishop(Board, Color.White));
             putNewPiece('g', 1, new Horse(Board, Color.White));
             putNewPiece('h', 1, new Tower(Board, Color.White));
@@ -236,7 +286,7 @@ namespace ChessGame.Chess
             putNewPiece('b', 8, new Horse(Board, Color.Black));
             putNewPiece('c', 8, new Bishop(Board, Color.Black));
             putNewPiece('d', 8, new Dame(Board, Color.Black));
-            putNewPiece('e', 8, new King(Board, Color.Black));
+            putNewPiece('e', 8, new King(Board, Color.Black, this));
             putNewPiece('f', 8, new Bishop(Board, Color.Black));
             putNewPiece('g', 8, new Horse(Board, Color.Black));
             putNewPiece('h', 8, new Tower(Board, Color.Black));
