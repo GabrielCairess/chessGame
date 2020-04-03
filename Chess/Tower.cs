@@ -15,7 +15,6 @@ namespace ChessGame.Chess
         {
             Piece p = Board.getPiece(pos);
             return p == null || p.Color != Color;
-
         }
 
         public override bool[,] possibleMoviments()

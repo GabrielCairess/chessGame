@@ -13,12 +13,66 @@ namespace ChessGame.Chess
 
         public override bool[,] possibleMoviments()
         {
-            throw new NotImplementedException();
+            bool[,] mat = new bool[Board.Lines, Board.Columns];
+
+            Position pos = new Position(0, 0);
+
+            pos.defineValues(Position.Line - 1, Position.Column - 1);
+            while (Board.validPosition(pos) && canMove(pos))
+            {
+                mat[pos.Line, pos.Column] = true;
+                if (Board.getPiece(pos) != null && Board.getPiece(pos).Color != Color)
+                {
+                    break;
+                }
+                pos.defineValues(pos.Line - 1, pos.Column - 1);
+            }
+
+            pos.defineValues(Position.Line - 1, Position.Column + 1);
+            while (Board.validPosition(pos) && canMove(pos))
+            {
+                mat[pos.Line, pos.Column] = true;
+                if (Board.getPiece(pos) != null && Board.getPiece(pos).Color != Color)
+                {
+                    break;
+                }
+                pos.defineValues(pos.Line - 1, pos.Column + 1);
+            }
+
+            pos.defineValues(Position.Line + 1, Position.Column + 1);
+            while (Board.validPosition(pos) && canMove(pos))
+            {
+                mat[pos.Line, pos.Column] = true;
+                if (Board.getPiece(pos) != null && Board.getPiece(pos).Color != Color)
+                {
+                    break;
+                }
+                pos.defineValues(pos.Line + 1, pos.Column + 1);
+            }
+
+            pos.defineValues(Position.Line + 1, Position.Column - 1);
+            while (Board.validPosition(pos) && canMove(pos))
+            {
+                mat[pos.Line, pos.Column] = true;
+                if (Board.getPiece(pos) != null && Board.getPiece(pos).Color != Color)
+                {
+                    break;
+                }
+                pos.defineValues(pos.Line - 1, pos.Column - 1);
+            }
+
+            return mat;
         }
 
         public override string ToString()
         {
             return "B";
+        }
+
+        private bool canMove(Position pos)
+        {
+            Piece p = Board.getPiece(pos);
+            return p == null || p.Color != Color;
         }
     }
 }
