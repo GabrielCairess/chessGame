@@ -7,8 +7,10 @@ namespace ChessGame.Chess
 {
     class Peon : Piece
     {
-        public Peon(Board board, Color  color) : base(board, color)
+        private ChessMatch Match;
+        public Peon(Board board, Color  color, ChessMatch match) : base(board, color)
         {
+            Match = match;
         }
 
         public override bool[,] possibleMoviments()
@@ -42,6 +44,22 @@ namespace ChessGame.Chess
                 {
                     mat[pos.Line, pos.Column] = true;
                 }
+
+                //En Passant
+                if (Position.Line == 3)
+                {
+                    Position left = new Position(Position.Line, Position.Column - 1);
+                    if (Board.validPosition(left) && existEnemy(left) && Board.getPiece(left) == Match.availableEmPassant)
+                    {
+                        mat[left.Line - 1, left.Column] = true;
+                    }
+
+                    Position right = new Position(Position.Line, Position.Column + 1);
+                    if (Board.validPosition(right) && existEnemy(right) && Board.getPiece(right) == Match.availableEmPassant)
+                    {
+                        mat[right.Line - 1, right.Column] = true;
+                    }
+                }
             }
             else
             {
@@ -67,6 +85,22 @@ namespace ChessGame.Chess
                 if (Board.validPosition(pos) && existEnemy(pos))
                 {
                     mat[pos.Line, pos.Column] = true;
+                }
+
+                //En Passant
+                if (Position.Line == 4)
+                {
+                    Position left = new Position(Position.Line, Position.Column - 1);
+                    if (Board.validPosition(left) && existEnemy(left) && Board.getPiece(left) == Match.availableEmPassant)
+                    {
+                        mat[left.Line + 1, left.Column] = true;
+                    }
+
+                    Position right = new Position(Position.Line, Position.Column + 1);
+                    if (Board.validPosition(right) && existEnemy(right) && Board.getPiece(right) == Match.availableEmPassant)
+                    {
+                        mat[right.Line + 1, right.Column] = true;
+                    }
                 }
             }
 
