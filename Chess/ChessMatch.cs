@@ -156,6 +156,22 @@ namespace ChessGame.Chess
                 throw new BoardException("Can't put in check yourself!");
             }
 
+            Piece p = Board.getPiece(destiny);
+
+            // special move promotion
+
+            if (p is Peon)
+            {
+                if ((p.Color == Color.White && destiny.Line == 0) || (p.Color == Color.Black && destiny.Line == 7))
+                {
+                    p = Board.removePiece(destiny);
+                    pieces.Remove(p);
+                    Piece dame = new Dame(Board, p.Color);
+                    Board.putPiece(dame, destiny);
+                    pieces.Add(dame);
+                }
+            }
+
             check = isInCheck(getOpponent(currentPlayer)) ? true : false;
 
             if (isCheckMate(getOpponent(currentPlayer)))
@@ -167,8 +183,6 @@ namespace ChessGame.Chess
                 turn++;
                 changePlayer();
             }
-
-            Piece p = Board.getPiece(destiny);
 
             // En Passant
             if (p is Peon && (destiny.Line == origin.Line - 2 || destiny.Line == origin.Line + 2))
